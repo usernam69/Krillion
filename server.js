@@ -204,3 +204,11 @@ server.on('error', (e) => {
   console.error('Server error:', e.message);
   process.exit(1);
 });
+
+function shutdown() {
+  console.log('Shutting down...');
+  server.close(() => process.exit(0));
+  setTimeout(() => process.exit(0), 5000).unref();
+}
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
