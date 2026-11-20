@@ -88,6 +88,13 @@ const server = http.createServer((req, res) => {
   const pathname = url.pathname;
   const isRsc = url.searchParams.has('_rsc');
 
+  // Health check for monitors / load balancers.
+  if (pathname === '/healthz') {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.end(JSON.stringify({ ok: true, uptime: process.uptime() }));
+    return;
+  }
+
   // Proxy API requests to the origin so the game can load live data.
   if (pathname === '/api' || pathname.startsWith('/api/')) {
     const target = 'https://krillion.io' + req.url;
