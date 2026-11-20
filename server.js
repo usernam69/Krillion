@@ -8,6 +8,7 @@ const zlib = require('zlib');
 const ROOT = __dirname;
 const RSC_DIR = path.join(ROOT, 'rsc');
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 // Reuse TLS connections to the origin for proxied API calls.
 const proxyAgent = new https.Agent({ keepAlive: true, maxSockets: 16 });
@@ -196,6 +197,10 @@ server.on('upgrade', (req, socket, head) => {
   socket.on('error', () => tlsSocket.destroy());
 });
 
-server.listen(PORT, () => {
-  console.log('Krillion mirror running at http://localhost:' + PORT);
+server.listen(PORT, HOST, () => {
+  console.log('Krillion mirror running at http://' + HOST + ':' + PORT);
+});
+server.on('error', (e) => {
+  console.error('Server error:', e.message);
+  process.exit(1);
 });
