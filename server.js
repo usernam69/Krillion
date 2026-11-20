@@ -61,8 +61,9 @@ function sendFile(res, filePath, req) {
     else if (acceptEncoding.includes('deflate')) encoding = 'deflate';
   }
   // Caching: hashed _next assets are immutable; others revalidate.
-  const immutable = filePath.includes(path.sep + '_next' + path.sep);
-  const cacheControl = immutable
+  const isHashedAsset = filePath.includes(path.sep + '_next' + path.sep);
+  const isImage = /\\.(png|jpe?g|webp|gif|svg|ico)$/i.test(filePath);
+  const cacheControl = (isHashedAsset || isImage)
     ? 'public, max-age=31536000, immutable'
     : 'public, max-age=0, must-revalidate';
 
