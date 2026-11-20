@@ -141,6 +141,13 @@ const server = http.createServer((req, res) => {
     if (fs.existsSync(alt)) resolved = alt;
   }
   if (!fs.existsSync(resolved)) {
+    const notFound = path.join(ROOT, '404.html');
+    if (fs.existsSync(notFound)) {
+      res.statusCode = 404;
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      fs.createReadStream(notFound).pipe(res);
+      return;
+    }
     res.statusCode = 404;
     res.end('not found');
     return;
