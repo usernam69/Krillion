@@ -85,6 +85,11 @@ function sendFile(res, filePath, req) {
 }
 
 const server = http.createServer((req, res) => {
+  const started = Date.now();
+  res.on('finish', () => {
+    const dur = Date.now() - started;
+    console.log(req.method, req.url, res.statusCode, dur + 'ms');
+  });
   let url;
   try {
     url = new URL(req.url, 'http://localhost');
