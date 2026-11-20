@@ -47,6 +47,12 @@ function sendFile(res, filePath, req) {
   const ext = path.extname(filePath).toLowerCase();
   const type = MIME[ext] || 'application/octet-stream';
   const stat = fs.statSync(filePath);
+  const etag = '\"' + stat.size.toString(16) + '-' + Math.floor(stat.mtimeMs).toString(16) + '\"';
+  if (req.headers['if-none-match'] === etag) {
+    res.statusCode = 304;
+    res.end();
+    return;
+  }
   const acceptEncoding = (req.headers['accept-encoding'] || '');
   let encoding = null;
   if (COMPRESSIBLE.has(ext)) {
@@ -62,6 +68,7 @@ function sendFile(res, filePath, req) {
   const headers = {
     'Content-Type': type,
     'Cache-Control': cacheControl,
+    'ETag': etag,
     'Content-Length': stat.size,
   };
   if (encoding) {
