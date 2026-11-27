@@ -6,7 +6,11 @@ on:
       - build/ipa
 
 jobs:
-  probe:
+  probe-linux:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "actions are working"
+      - run: echo "linux actions are working"
+  probe-macos:
+    runs-on: macos-latest
+    steps:
+      - run: echo "macos actions are working"
