@@ -17,7 +17,7 @@ jobs:
       - name: Stage the static mirror as app resources
         run: |
           mkdir -p ios/www
-          rsync -a --exclude '/ios/' --exclude '/.git/' ./ ios/www/
+          rsync -a --exclude '/ios/' --exclude '/.git/' --exclude '/build/' --exclude '/node_modules/' ./ ios/www/
           test -f ios/www/index.html
 
       - name: Install XcodeGen

@@ -19,17 +19,14 @@ targets:
     platform: iOS
     sources:
       - path: App
-    resources:
       - path: www
         type: folder
-    settings:
-      PRODUCT_BUNDLE_IDENTIFIER: io.krillion.mirror
-      PRODUCT_NAME: Krillion
-      GENERATE_INFOPLIST_FILE: YES
-      INFOPLIST:
+        buildPhase: resources
+    info:
+      path: App/Info.plist
+      properties:
         CFBundleDisplayName: Krillion
         CFBundleName: Krillion
-        CFBundleIdentifier: io.krillion.mirror
         CFBundleVersion: "1"
         CFBundleShortVersionString: "1.0.0"
         LSRequiresIPhoneOS: true
@@ -45,3 +42,6 @@ targets:
           - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: io.krillion.mirror
+      PRODUCT_NAME: Krillion
