@@ -9,7 +9,7 @@ settings:
   SWIFT_EMIT_LOC_STRINGS: NO
   TARGETED_DEVICE_FAMILY: "1,2"
   CODE_SIGN_STYLE: Manual
-  CODE_SIGN_IDENTITY: "-"
+  CODE_SIGNING_ALLOWED: NO
   CODE_SIGNING_REQUIRED: NO
   ENABLE_BITCODE: NO
   IPHONEOS_DEPLOYMENT_TARGET: "15.0"
@@ -25,6 +25,7 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: io.krillion.mirror
       PRODUCT_NAME: Krillion
+      GENERATE_INFOPLIST_FILE: YES
       INFOPLIST:
         CFBundleDisplayName: Krillion
         CFBundleName: Krillion
