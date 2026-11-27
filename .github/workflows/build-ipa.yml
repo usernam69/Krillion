@@ -1,0 +1,49 @@
+name: Build Krillion IPA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v4
+
+      - name: Stage the static mirror as app resources
+        run: |
+          mkdir -p ios/www
+          rsync -a --exclude '/ios/' --exclude '/.git/' ./ ios/www/
+          test -f ios/www/index.html
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate the Xcode project
+        working-directory: ios
+        run: xcodegen generate
+
+      - name: Build and archive (ad-hoc signing)
+        working-directory: ios
+        run: |
+          xcodebuild -project Krillion.xcodeproj -scheme Krillion \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath build/Krillion.xcarchive \
+            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO \
+            archive
+
+      - name: Package the IPA
+        working-directory: ios
+        run: |
+          mkdir -p build/Payload
+          cp -R build/Krillion.xcarchive/Products/Applications/Krillion.app build/Payload/
+          cd build
+          zip -qry Krillion.ipa Payload
+
+      - name: Upload the IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: krillion-ipa
+          path: ios/build/Krillion.ipa
+          retention-days: 14

@@ -1,0 +1,46 @@
+name: Krillion
+options:
+  bundleIdPrefix: io.krillion
+  deploymentTarget:
+    iOS: "15.0"
+  createIntermediateGroups: true
+settings:
+  SWIFT_VERSION: "5.0"
+  SWIFT_EMIT_LOC_STRINGS: NO
+  TARGETED_DEVICE_FAMILY: "1,2"
+  CODE_SIGN_STYLE: Manual
+  CODE_SIGN_IDENTITY: "-"
+  CODE_SIGNING_REQUIRED: NO
+  ENABLE_BITCODE: NO
+  IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+targets:
+  Krillion:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+    resources:
+      - path: www
+        type: folder
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: io.krillion.mirror
+      PRODUCT_NAME: Krillion
+      INFOPLIST:
+        CFBundleDisplayName: Krillion
+        CFBundleName: Krillion
+        CFBundleIdentifier: io.krillion.mirror
+        CFBundleVersion: "1"
+        CFBundleShortVersionString: "1.0.0"
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        UIRequiredDeviceCapabilities:
+          - arm64
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
