@@ -2,6 +2,9 @@ name: Build Krillion IPA
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - build/ipa
 
 jobs:
   build:
