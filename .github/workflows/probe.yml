@@ -1,0 +1,12 @@
+name: Actions probe
+
+on:
+  push:
+    branches:
+      - build/ipa
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "actions are working"
